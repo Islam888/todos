@@ -20,6 +20,15 @@ class EventList extends Component {
         events : []
     }
     componentDidMount() {
+        setInterval(() => {
+            this.setState({
+                events: this.state.events.map(e => ({
+                    ...e,
+                    timer: Date.now()
+                }))
+            })
+        }, 1000)
+
         const events = require('./db.json').events.map(e => ({
             ...e,
             date: new Date(e.date)
