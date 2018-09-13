@@ -46,13 +46,13 @@ const styles = StyleSheet.create({
 class EventForm extends Component {
     state = {
         title: '',
-        showDatePicker: false,
-        date: ''
+        date: '',
+        showDatePicker: false
     }
 
     handleAddPress = () => {
-        console.log(this.state.title)
-        this.props.navigation.navigate('list')
+        saveEvents(this.state)
+        .then(() => this.props.navigation.goBack())
     }
     handleChangeTitle = (text) => {
         this.setState({
