@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import {
-     FlatList,
-     Text,
-     StyleSheet
+    FlatList,
+    Text,
+    StyleSheet
 } from 'react-native';
 import EventCard from './EventCard';
 import ActionButton from 'react-native-action-button'
@@ -13,13 +13,13 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingTop: 20,
         backgroundColor: '#F3F3F3'
-      }
+    }
 })
 
 class EventList extends Component {
 
     state = {
-        events : []
+        events: []
     }
     componentDidMount() {
         setInterval(() => {
@@ -31,29 +31,31 @@ class EventList extends Component {
             })
         }, 1000)
 
-        getEvents().then(events => ({
-            events,
-        }))
-
-    handleAddEvent = () => {
-        this.props.navigation.navigate('form')
+        this.props.navigation.addListener('didFocus', () => {
+            getEvents().then(events => ({
+                events,
+            }))
+        })     
     }
-    
-    render() {
-        return [
-            <FlatList
-            style={styles.list}
-            data={this.state.events}
-            renderItem={({ item }) => <EventCard event={item} />}
-            keyExtractor={item => item.id}
-            />,
-            <ActionButton 
-            key='fab'
-            onPress={this.handleAddEvent}
-            buttonColor='rgba(231, 76, 60, 1)'
-            />
-        ]
-    }
-}
+        handleAddEvent = () => {
+            this.props.navigation.navigate('form')
+        }
 
-export default EventList;
+        render() {
+            return [
+                <FlatList
+                    style={styles.list}
+                    data={this.state.events}
+                    renderItem={({ item }) => <EventCard event={item} />}
+                    keyExtractor={item => item.id}
+                />,
+                <ActionButton
+                    key='fab'
+                    onPress={this.handleAddEvent}
+                    buttonColor='rgba(231, 76, 60, 1)'
+                />
+            ]
+        }
+    }
+
+    export default EventList;
