@@ -7,7 +7,7 @@ import {
     StyleSheet
 } from 'react-native'
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import { formatDateTime } from './api';
+import { formatDateTime, saveEvents } from './api';
 
 const styles = StyleSheet.create({
     fieldContainer: {
