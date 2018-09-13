@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import EventCard from './EventCard';
 import ActionButton from 'react-native-action-button'
-
+import { getEvents } from './api.js'
 
 const styles = StyleSheet.create({
     list: {
@@ -31,14 +31,9 @@ class EventList extends Component {
             })
         }, 1000)
 
-        const events = require('./db.json').events.map(e => ({
-            ...e,
-            date: new Date(e.date)
+        getEvents().then(events => ({
+            events,
         }))
-        this.setState(
-            {events}
-        )
-    }
 
     handleAddEvent = () => {
         this.props.navigation.navigate('form')
