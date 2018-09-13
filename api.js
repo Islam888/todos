@@ -1,4 +1,32 @@
 import moment from 'moment'
+import Expo from 'expo'
+import uuid from 'uuid'
+
+const { manifest } = Expo.Constants
+const api = manifest.packagerOpts.dev
+  ? manifest.debuggerHost.split(`:`).shift().concat(`:3000`)
+  : `api.example.com`;
+
+const url = `http://${api}/events`
+
+export function getEvents() {
+  return fetch(url)
+  .then(response => response.json())
+  .then(events => events.map(e => ({...e, date: new Date(e.date)})))
+}
+
+export function saveEvents({title, date}) {
+  return fetch(url, {
+    method: 'POST',
+    body: JSON.stringify({
+      title,
+      date,
+      id: uuid()
+    })
+  })  
+  .then(response => response.json())
+  .catch(err => console.log(err))
+}
 
 export function formatDate(dateString) {
   const parsed = moment(new Date(dateString));
